@@ -24,15 +24,15 @@ class BinaryString:
         return self.value
 
 
-class FloatingPointNumber(BinaryString):
+class FloatingPointNumber():
     def __init__(self, mantissa, exponent):
-        super().__init__(mantissa+exponent)
-        self.mantissa_size = len(mantissa)
-        self.exponent_size = len(exponent)
+        self.mantissa = BinaryString(mantissa)
+        self.exponent = BinaryString(exponent)
 
     @classmethod
     def as_single_string(cls, binary, mantissa_size):
         return cls(binary[:mantissa_size], binary[mantissa_size:])
+
 
 
 

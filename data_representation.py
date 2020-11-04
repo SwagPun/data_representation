@@ -44,8 +44,18 @@ class BinaryString:
                 inverted += "0"
             else:
                 inverted += "1"
-        return inverted
+        return BinaryString(inverted)
 
+    def __int__(self):
+        column_value = 2 ** (len(self))
+        i=0
+        total=0
+        while column_value > 1:
+            column_value //= 2
+            if self.value[i] == "1":
+                total += column_value
+            i+=1
+        return total
 
 class FixPointNumber(BinaryString):
     def __init__(self, binary, point):
@@ -115,8 +125,9 @@ class TwosComplementNumber(BinaryString):
 
     def __int__(self):
         if self.is_negative():
-            pass
-
+            return -int(self.to_positive())
+        else:
+            return int(self)
 
 
 class FloatingPointNumber():
@@ -160,8 +171,8 @@ class FloatingPointNumber():
 
 
 if __name__ == '__main__':
-    x = FixPointNumber("011", 3)
-    print(x)
-    print(~x)
+    x = TwosComplementNumber("0111")
+    print(int(x))
+    print(int(~x))
 
 

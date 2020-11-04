@@ -11,6 +11,14 @@ class BinaryString:
     def value(self):
         return self._value
 
+    @property
+    def msb(self):
+        return self._value[0]
+
+    @property
+    def lsb(self):
+        return self._value[-1]
+
     @value.setter
     def value(self, value):
         if type(value) != str:
@@ -68,19 +76,47 @@ class FixPointNumber(BinaryString):
 class TwosComplementNumber(BinaryString):
     def __abs__(self):
         """ Returns whole number part of twos complement number as BinaryString"""
-        pass
+        if self.is_negative():
+            self = self._convert(self)
+        else:
+            return self
+
+    def _convert(self):
+        leading_one = len(self)
+        while leading_one != "1" and leading_one > 0:
+            leading_one -= 1
+
+        flipped_bits = ~BinaryString(self.value[:leading_one])
+        unflipped_bits = BinaryString(self.value[leading_one:])
+
+        return flipped_bits + unflipped_bits
+
+    @property
+    def sign_bit(self):
+        return self.msb
 
     def to_positive(self):
-        pass
+        return abs(self)
 
     def __neg__(self):
-        pass
+        return self._convert(self)
 
     def is_positive(self):
-        pass
+        if self.sign_bit == "1":
+            return False
+        else:
+            return True
 
     def is_negative(self):
-        pass
+        if self.sign_bit == "0":
+            return False
+        else:
+            return True
+
+    def __int__(self):
+        if self.is_negative():
+            pass
+
 
 
 class FloatingPointNumber():
@@ -124,7 +160,7 @@ class FloatingPointNumber():
 
 
 if __name__ == '__main__':
-    x = FloatingPointNumber("011", 3)
+    x = FixPointNumber("011", 3)
     print(x)
     print(~x)
 

@@ -164,27 +164,26 @@ class FloatingPointNumber():
     def __str__(self):
         return str(self.mantissa + self.exponent)
 
-    @classmethod
-    def convertExponent(self,exponent):
-        value=0
-        for i in range(len(str(exponent))):
-            if ((len(str(exponent))))-i==1:
-                value=value+2**i
-        return value
+    #@classmethod
+    #def convertExponent(self,exponent):
+      #  value=0
+      #  for i in range(len(str(exponent))):
+      #      if ((len(str(exponent))))-i==1:
+      #          value=value+2**i
+      #  return value
 
     def __int__(self):
-        #Convert exponent from twos complement
+
         def __int__(self):
             return int(float(self))
 
         def __float__(self):
             return float(int(self.mantissa) * (2 ** int(self.exponent)))
-        #Convert to integer
 
-        #Convert mantissa from twos complement
+        def __invert__(self):
+            return FloatingPointNumber(str(~self.mantissa), str(~self.exponent))
 
-        #Convert to integer
-        return 45
+        
 
 class RGB():
     def __init__(self,red,green,blue):
